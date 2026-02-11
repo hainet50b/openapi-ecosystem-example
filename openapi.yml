@@ -1,0 +1,120 @@
+openapi: 3.1.2
+
+info:
+  title: Credit Card API
+  description: Provides access to payment resources.
+  license:
+    name: MIT License
+    url: https://opensource.org/license/mit
+  version: 1.0.0
+
+servers:
+  - url: https://localhost:8080
+
+paths:
+  /authorizations:
+    post:
+      tags:
+        - Payment
+      summary: Create a card authorization
+      operationId: createAuthorization
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateAuthorizationRequest"
+      responses:
+        "201":
+          description: Success.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Authorization"
+  /captures:
+    post:
+      tags:
+        - Payment
+      summary: Capture a card authorization
+      operationId: captureAuthorization
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CaptureAuthorizationRequest"
+      responses:
+        "201":
+          description: Success.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Capture"
+
+components:
+  schemas:
+    # /authorizations
+    CreateAuthorizationRequest:
+      description: Request to create a card authorization.
+      type: object
+      properties:
+        amount:
+          type: number
+          example: 9200
+      required:
+        - amount
+    Authorization:
+      description: Represents a card authorization.
+      type: object
+      properties:
+        id:
+          type: string
+          example: fabcdc6c-b21f-4728-9a92-3e3e478a5bd8
+        status:
+          type: string
+          example: authorized
+        amount:
+          type: number
+          example: 9200
+      required:
+        - id
+        - status
+        - amount
+
+    # /captures
+    CaptureAuthorizationRequest:
+      description: Request to capture a card authorization.
+      type: object
+      properties:
+        authorization_id:
+          type: string
+          example: fabcdc6c-b21f-4728-9a92-3e3e478a5bd8
+        amount:
+          type: number
+          example: 9200
+      required:
+        - authorization_id
+        - amount
+    Capture:
+      description: Represents a capture for a card authorization.
+      type: object
+      properties:
+        id:
+          type: string
+          example: bda9b06e-e14f-484f-b461-12e218c354b3
+        status:
+          type: string
+          example: captured
+        amount:
+          type: number
+          example: 9200
+      required:
+        - id
+        - status
+        - amount
+
+security: []
+
+tags:
+  - name: Payment
+    description: Operations related to payments.
