@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 docker run --rm -it \
-  -v "$(pwd)/openapi.yml":/spec/openapi.yml \
+  -v "$(pwd)":/spec \
   redocly/cli:latest \
     lint \
-      openapi.yml
+      openapi.yml \
+      arazzo.yml
