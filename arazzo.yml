@@ -36,7 +36,7 @@ workflows:
           - condition: $statusCode == 201
         outputs:
           authorizationId: $response.body#/id
-          authorizationStatus: $respnse.body#/status
+          authorizationStatus: $response.body#/status
 
       - stepId: captureAuthorizationStep
         description: Capture a card authorization.
@@ -49,5 +49,5 @@ workflows:
         successCriteria:
           - condition: $statusCode == 201
         outputs:
-          captureId: $respnse.body#/id
-          captureStatus: $respnse.body#/status
+          captureId: $response.body#/id
+          captureStatus: $response.body#/status
