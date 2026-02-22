@@ -50,6 +50,25 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Capture"
+  /reversals:
+    post:
+      tags:
+        - Payment
+      summary: Reverse a card authorization
+      operationId: reverseAuthorization
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ReverseAuthorizationRequest"
+      responses:
+        "201":
+          description: Success.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Reversal"
 
 components:
   schemas:
@@ -112,6 +131,30 @@ components:
         - id
         - status
         - amount
+
+    # /reversals
+    ReverseAuthorizationRequest:
+      description: Request to reverse a card authorization.
+      type: object
+      properties:
+        authorization_id:
+          type: string
+          example: fabcdc6c-b21f-4728-9a92-3e3e478a5bd8
+      required:
+        - authorization_id
+    Reversal:
+      description: Represents a reversal for a card authorization.
+      type: object
+      properties:
+        id:
+          type: string
+          example: dc5715dc-d05d-4632-ba88-0fc2b71509c9
+        status:
+          type: string
+          example: reversed
+      required:
+        - id
+        - status
 
 security: []
 
